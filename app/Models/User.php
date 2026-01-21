@@ -49,4 +49,24 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    public function zadaci()
+    {
+        return $this->hasMany(Zadatak::class,'korisnik_id');
+    }
+
+    public function beleske()
+    {
+        return $this->hasMany(Beleške::class,'korisnik_id');
+    }
+
+    public function statistika()
+    {
+        return $this->hasOne(Statistika::class,'korisnik_id');
+    }
+
+    public function podsetnici()
+    {
+        return $this->hasMany(Podsetnik::class,'korisnik_id');
+    }
 }
