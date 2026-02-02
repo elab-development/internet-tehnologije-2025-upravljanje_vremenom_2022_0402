@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Podsetnik;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,17 +11,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PodsetnikFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Podsetnik::class;
     public function definition(): array
     {
         return [
             'vreme' => $this->faker->dateTimeBetween('now', '+7 days'),
             'aktivan' => $this->faker->boolean(80), 
-            'korisnik_id' => UserFactory::factory(),
+            'korisnik_id' => User::factory(),
 
         ];
     }

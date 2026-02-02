@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Zadatak;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,11 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ZadatakFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Zadatak::class;
     public function definition(): array
     {
         return [
@@ -21,7 +19,7 @@ class ZadatakFactory extends Factory
             'opis' => $this->faker->paragraph(),
             'uradjeno' => $this->faker->boolean(30), 
             'rok' => $this->faker->dateTimeBetween('now', '+1 month'),
-            'korisnik_id' => UserFactory::factory(),
+            'korisnik_id' => User::factory(),
 
         ];
     }

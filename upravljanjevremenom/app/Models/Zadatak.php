@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use HasFactory;
 
 class Zadatak extends Model
 {
+    use HasFactory;
     protected $table='zadaci';
     protected $fillable = [
         'korisnik_id',
