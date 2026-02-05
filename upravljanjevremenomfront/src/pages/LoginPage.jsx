@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Input, Button } from "../components";
+import Button from "../components/Button";
+import Input from "../components/Input";
 import "./LoginPage.css";
 
 function LoginPage({ onLogin }) {

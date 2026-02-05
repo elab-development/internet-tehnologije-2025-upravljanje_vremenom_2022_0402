@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.navbar-logo {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-right button {
+  margin-left: 10px;
+  padding: 5px 15px;
+  background-color: white;
+  color: #8b5cf6;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navbar-right button:hover {
+  background-color: #7c3aed;
+  color: white;
+}

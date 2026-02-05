@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Button, Input, Card } from "../components";
+import { useEffect, useState } from "react";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Input from "../components/Input";
 import "./Zadatak.css";
 
 function Zadatak() {
@@ -7,6 +9,14 @@ function Zadatak() {
   const [naslov, setNaslov] = useState("");
   const [opis, setOpis] = useState("");
   const [uradjeno, setUradjeno] = useState(false);
+
+  useEffect(() => {
+    // Primer inicijalnih zadataka
+    setZadaci([
+      { naslov: "Prvi zadatak", uradjeno: false },
+      { naslov: "Drugi zadatak", uradjeno: true },
+    ]);
+  }, []);
 
   const dodajZadatak = () => {
     if (!naslov) return;

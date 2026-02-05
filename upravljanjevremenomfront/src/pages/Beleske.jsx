@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Button, Input, Card } from "../components";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Input from "../components/Input";
 import "./Beleske.css";
 
 function Beleske() {

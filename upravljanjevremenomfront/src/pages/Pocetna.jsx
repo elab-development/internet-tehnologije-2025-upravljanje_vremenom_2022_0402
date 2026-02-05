@@ -1,4 +1,5 @@
-import { Card, Button } from "../components";
+import Button from "../components/Button";
+import Card from "../components/Card";
 import "./Pocetna.css";
 import { useNavigate } from "react-router-dom";
 

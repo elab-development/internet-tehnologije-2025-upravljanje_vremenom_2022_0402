@@ -1,13 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
-const Navbar = () => {
+function Navbar({ user, onLogout }) {
+  const navigate = useNavigate();
+
   return (
-    <div>
-        <Link to="/" className="href">Pocetna</Link>
-        <Link to="/" className="href">Login</Link>
-    </div>
-  )
+    <nav className="navbar">
+      <div className="navbar-left">
+        <h2 className="navbar-logo" onClick={() => navigate("/home")}>MyTasksApp</h2>
+      </div>
+
+      <div className="navbar-right">
+        <button onClick={() => navigate("/home")}>Početna</button>
+        <button onClick={() => navigate("/beleske")}>Beleške</button>
+        <button onClick={() => navigate("/zadaci")}>Zadaci</button>
+        <button onClick={() => navigate("/podsetnik")}>Podsetnik</button>
+        <button onClick={() => navigate("/obavestenja")}>Obaveštenja</button>
+        <button onClick={() => navigate("/statistika")}>Statistika</button>
+        {user && <button onClick={onLogout}>Logout</button>}
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
