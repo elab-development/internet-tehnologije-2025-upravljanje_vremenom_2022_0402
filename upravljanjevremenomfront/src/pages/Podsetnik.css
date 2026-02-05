@@ -1,0 +1,42 @@
+podsetnik-container {
+  min-height: 100vh;
+  padding: 40px;
+  background-color: #f3f4f6;
+}
+
+.podsetnik-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.podsetnik-input input {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.podsetnik-input button {
+  padding: 10px 20px;
+  background-color: #f97316;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.podsetnik-input button:hover {
+  background-color: #ea580c;
+}
+
+.podsetnik-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.podsetnik-card {
+  padding: 15px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+}
+

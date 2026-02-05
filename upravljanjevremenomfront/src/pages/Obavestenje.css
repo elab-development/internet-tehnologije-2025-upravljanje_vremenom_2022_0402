@@ -1,0 +1,43 @@
+.obavestenje-container {
+  min-height: 100vh;
+  padding: 40px;
+  background-color: #eef2ff;
+}
+
+.obavestenje-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.obavestenje-input input,
+.obavestenje-input select {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.obavestenje-input button {
+  padding: 10px 20px;
+  background-color: #f87171;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.obavestenje-input button:hover {
+  background-color: #ef4444;
+}
+
+.obavestenje-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.obavestenje-card {
+  padding: 15px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+}
+

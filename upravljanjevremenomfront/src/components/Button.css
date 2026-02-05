@@ -1,0 +1,15 @@
+.btn {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn.primary { background-color: #3b82f6; }
+.btn.success { background-color: #10b981; }
+.btn.danger { background-color: #ef4444; }
+
+.btn:hover { opacity: 0.9; }
+

@@ -1,7 +1,28 @@
-import React from 'react'
+import { useState } from "react";
+import { Input, Button } from "../components";
+import "./LoginPage.css";
 
-export const LoginPage = () => {
+function LoginPage({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    // ovde ide fetch ka backendu
+    console.log("Login:", email, password);
+    if(onLogin) onLogin(email);
+  };
+
   return (
-    <div>LoginPage</div>
-  )
+    <div className="login-container">
+      <h2>Login</h2>
+      <div className="login-form">
+        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+        <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Lozinka" />
+        <Button text="Prijavi se" onClick={handleLogin} type="primary" />
+      </div>
+    </div>
+  );
 }
+
+export default LoginPage;
+

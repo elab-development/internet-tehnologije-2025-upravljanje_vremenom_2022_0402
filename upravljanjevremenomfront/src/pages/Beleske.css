@@ -1,0 +1,42 @@
+.beleske-container {
+  min-height: 100vh;
+  padding: 40px;
+  background-color: #f9fafb;
+}
+
+.beleske-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.beleske-input input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.beleske-input button {
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.beleske-input button:hover {
+  background-color: #2563eb;
+}
+
+.beleske-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.beleska-card {
+  padding: 15px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+}

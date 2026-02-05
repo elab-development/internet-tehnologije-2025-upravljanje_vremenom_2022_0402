@@ -12,13 +12,15 @@ function App() {
       <Navbar></Navbar>
         <Routes>
           <Route path="/" element={<Pocetna />} />
+          <Route path="/home" element={<Pocetna />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/beleske" element={<Beleske />} />
+          <Route path="/podsetnik" element={<Podsetnik />} />
+          <Route path="/zadaci" element={<Zadatak />} />
+          <Route path="/obavestenja" element={<Obavestenje />} />
+          <Route path="/statistika" element={<Statistika />} />
 
-
-          {/*<Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          */}
+          
 
         </Routes>
       </BrowserRouter>
