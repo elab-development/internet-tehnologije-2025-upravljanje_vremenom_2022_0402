@@ -8,7 +8,7 @@ function Pocetna() {
 
   return (
     <div className="pocetna-container">
-      <h2>Dobrodošli na Task Manager</h2>
+      <h2>Dobrodošli u Time Manager</h2>
 
       <div className="pocetna-cards">
         <Card title="Zadaci" content="Pregledaj sve zadatke" footer={<Button text="Idi na Zadaci" onClick={() => navigate("/zadaci")} type="primary" />} />

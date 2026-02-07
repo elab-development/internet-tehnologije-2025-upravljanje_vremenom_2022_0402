@@ -1,7 +1,7 @@
 .obavestenje-container {
   min-height: 100vh;
   padding: 40px;
-  background-color: #eef2ff;
+  background-color: #f4ecf4;
 }
 
 .obavestenje-input {
@@ -18,14 +18,14 @@
 
 .obavestenje-input button {
   padding: 10px 20px;
-  background-color: #f87171;
+  background-color: #7c3aed;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 .obavestenje-input button:hover {
-  background-color: #ef4444;
+  background-color: #7c3aed;
 }
 
 .obavestenje-list {

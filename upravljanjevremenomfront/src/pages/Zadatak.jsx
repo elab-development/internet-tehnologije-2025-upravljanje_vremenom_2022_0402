@@ -40,7 +40,7 @@ function Zadatak() {
         <Input value={naslov} onChange={(e) => setNaslov(e.target.value)} placeholder="Naslov zadatka" />
         <Input value={opis} onChange={(e) => setOpis(e.target.value)} placeholder="Opis zadatka" />
         <label>
-          <input type="checkbox" checked={uradjeno} onChange={() => setUradjeno(!uradjeno)} /> Uradjeno
+          <input type="checkbox" checked={uradjeno} onChange={() => setUradjeno(!uradjeno)} /> Urađeno
         </label>
         <Button text="Dodaj zadatak" onClick={dodajZadatak} type="primary" />
       </div>
@@ -56,7 +56,7 @@ function Zadatak() {
               content={z.opis}
               footer={
                 <Button
-                  text={z.uradjeno ? "Označi kao neurađeno" : "Označi kao urađeno"}
+                  text={z.uradjeno ? "Završeno" : "Označi kao urađeno"}
                   onClick={() => toggleUradjeno(index)}
                   type="success"
                 />

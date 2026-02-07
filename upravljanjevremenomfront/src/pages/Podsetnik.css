@@ -1,7 +1,7 @@
-podsetnik-container {
+.podsetnik-container {
   min-height: 100vh;
   padding: 40px;
-  background-color: #f3f4f6;
+  background-color: #f4ecf4;
 }
 
 .podsetnik-input {
@@ -17,14 +17,14 @@ podsetnik-container {
 
 .podsetnik-input button {
   padding: 10px 20px;
-  background-color: #f97316;
+  background-color: #7c3aed;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 .podsetnik-input button:hover {
-  background-color: #ea580c;
+  background-color: #7c3aed;
 }
 
 .podsetnik-list {
@@ -35,7 +35,7 @@ podsetnik-container {
 
 .podsetnik-card {
   padding: 15px;
-  background-color: white;
+  background-color: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 5px;
 }

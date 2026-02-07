@@ -6,8 +6,10 @@ function Navbar({ user, onLogout }) {
 
   return (
     <nav className="navbar">
+     
       <div className="navbar-left">
-        <h2 className="navbar-logo" onClick={() => navigate("/home")}>MyTasksApp</h2>
+        <img src="/favicon.ico" alt="Logo" className="navbar-logo" /> 
+        <h1 className="navbar-title" onClick={() => navigate("/home")}>Time Manager</h1>
       </div>
 
       <div className="navbar-right">
