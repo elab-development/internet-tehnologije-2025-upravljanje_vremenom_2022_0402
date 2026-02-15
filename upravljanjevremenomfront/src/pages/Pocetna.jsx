@@ -4,7 +4,20 @@ import "./Pocetna.css";
 import { useNavigate } from "react-router-dom";
 
 function Pocetna() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
+
+  if (currentUser) {
+  if (currentUser.role === "admin") {
+    console.log("Admin je ulogovan");
+  } else if (currentUser.role === "premium") {
+    console.log("Premium korisnik je ulogovan");
+  } else {
+    console.log("Regular korisnik je ulogovan");
+  }
+  } else {
+  console.log("Niko nije ulogovan");
+  }
 
   return (
     <div className="pocetna-container">

@@ -31,3 +31,9 @@
 .login-form button:hover {
   background-color: #4338ca;
 }
+
+.login-error {
+  color: red;
+  margin-top: 10px;
+}
+
