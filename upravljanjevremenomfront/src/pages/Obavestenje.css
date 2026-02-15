@@ -41,3 +41,14 @@
   border-radius: 5px;
 }
 
+.obavestenje-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.obavestenje-actions div button {
+  margin-left: 5px;
+}
+

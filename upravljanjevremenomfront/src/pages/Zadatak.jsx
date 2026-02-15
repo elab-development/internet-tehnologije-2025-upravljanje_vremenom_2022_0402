@@ -26,6 +26,22 @@ function Zadatak() {
     setUradjeno(false);
   };
 
+  const obrisiZadatak = (index) => {
+  const novaLista = zadaci.filter((_, i) => i !== index);
+  setZadaci(novaLista);
+  };
+
+  const izmeniZadatak = (index) => {
+  const noviNaslov = prompt("Unesite novi naslov zadatka:", zadaci[index].naziv);
+  const noviOpis = prompt("Unesite novi opis zadatka:", zadaci[index].opis);
+
+  if (!noviNaslov) return;
+
+  const novaLista = [...zadaci];
+  novaLista[index] = { naziv: noviNaslov, opis: noviOpis };
+  setZadaci(novaLista);
+  };
+
   const toggleUradjeno = (index) => {
     const novaLista = [...zadaci];
     novaLista[index].uradjeno = !novaLista[index].uradjeno;
@@ -55,11 +71,23 @@ function Zadatak() {
               title={z.naslov}
               content={z.opis}
               footer={
+                <div className="zadatak-actions">
+                < Button
+                  text="Izmeni"
+                  onClick={() => izmeniZadatak(index)}
+                  type="secondary"
+                />
+                <Button
+                  text="Obriši"
+                  onClick={() => obrisiZadatak(index)}
+                  type="danger"
+                />
                 <Button
                   text={z.uradjeno ? "Završeno" : "Označi kao urađeno"}
                   onClick={() => toggleUradjeno(index)}
                   type="success"
                 />
+                </div>
               }
             />
           ))

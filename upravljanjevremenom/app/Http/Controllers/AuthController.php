@@ -87,7 +87,7 @@ class AuthController extends Controller
             'message' => 'Uspešno ste se izlogovali',
         ], 200);
     }
-
+    //ME
     public function me(Request $request)
     {
         return response()->json($request->user());

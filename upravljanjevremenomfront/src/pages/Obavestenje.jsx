@@ -17,6 +17,19 @@ function Obavestenje() {
     setKanal("email");
   };
 
+  const obrisiObavestenje = (index) => {
+    const novaLista = obavestenja.filter((_, i) => i !== index);
+    setObavestenja(novaLista);
+  };
+
+  const izmeniObavestenje = (index) => {
+    const noviTekst = prompt("Unesite novi tekst obaveštenja:", obavestenja[index].poruka);
+    if (!noviTekst) return;
+
+    const novaLista = [...obavestenja];
+    novaLista[index].poruka = noviTekst;
+    setObavestenja(novaLista);
+};
   return (
     <div className="obavestenje-container">
       <h2>Obaveštenja</h2>
@@ -40,7 +53,15 @@ function Obavestenje() {
               key={index}
               title={`Obaveštenje #${index + 1}`}
               content={o.poruka}
-              footer={`Poslato: ${o.poslatoU} | Kanal: ${o.kanal}`}
+              footer={
+                <div className="obavestenje-actions">
+                  <span>Poslato: {o.poslatoU} | Kanal: {o.kanal}</span>
+                  <div>
+                    <Button text="Izmeni" onClick={() => izmeniObavestenje(index)} type="secondary" />
+                    <Button text="Obriši" onClick={() => obrisiObavestenje(index)} type="danger" />
+                  </div>
+                </div>
+              }
             />
           ))
         )}

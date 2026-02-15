@@ -16,6 +16,11 @@ function Podsetnik() {
     setAktivan(true);
   };
 
+  const obrisiPodsetnik = (index) => {
+  const novaLista = podsetnici.filter((_, i) => i !== index);
+  setPodsetnici(novaLista);
+  };
+
   const toggleAktivan = (index) => {
     const novaLista = [...podsetnici];
     novaLista[index].aktivan = !novaLista[index].aktivan;
@@ -44,11 +49,18 @@ function Podsetnik() {
               title={`Podsetnik #${index + 1}`}
               content={`Vreme: ${p.vreme}`}
               footer={
-                <Button
-                  text={p.aktivan ? "Deaktiviraj" : "Aktiviraj"}
-                  onClick={() => toggleAktivan(index)}
-                  type={p.aktivan ? "success" : "danger"}
-                />
+                <div className="podsetnik-actions">
+                  <Button
+                    text="Obriši"
+                    onClick={() => obrisiPodsetnik(index)}
+                    type="danger"
+                  />
+                  <Button
+                    text={p.aktivan ? "Deaktiviraj" : "Aktiviraj"}
+                    onClick={() => toggleAktivan(index)}
+                    type={p.aktivan ? "success" : "danger"}
+                  />
+                </div>
               }
             />
           ))

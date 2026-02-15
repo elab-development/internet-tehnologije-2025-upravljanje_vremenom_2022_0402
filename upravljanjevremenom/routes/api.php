@@ -46,7 +46,7 @@ Route::get('/podsetnik', [PodsetnikController::class,'index']);
 Route::middleware('auth:sanctum')-> group(function(){
     Route::post('/podsetnik', [PodsetnikController::class,'store']);
     Route::delete('/podsetnik/{id}', [PodsetnikController::class,'destroy']);
-    Route::put('/podsetnik/{id}', [PodsetnikController::class,'update']);
+    /**Route::put('/podsetnik/{id}', [PodsetnikController::class,'update']);**/
 });
 
 Route::get('/statistika/{id}', [StatistikaController::class,'show']);

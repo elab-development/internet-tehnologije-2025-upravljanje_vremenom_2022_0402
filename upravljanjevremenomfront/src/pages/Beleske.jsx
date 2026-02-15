@@ -15,6 +15,21 @@ function Beleske() {
     setNaslov("");
     setSadrzaj("");
   };
+  const obrisiBelesku = (index) => {
+  const novaLista = beleske.filter((_, i) => i !== index);
+  setBeleske(novaLista);
+  };
+
+  const izmeniBelesku = (index) => {
+  const noviNaslov = prompt("Unesite novi naslov:", beleske[index].naslov);
+  const noviSadrzaj = prompt("Unesite novi sadržaj:", beleske[index].sadrzaj);
+
+    if (!noviNaslov) return;
+
+  const novaLista = [...beleske];
+  novaLista[index] = { naslov: noviNaslov, sadrzaj: noviSadrzaj };
+  setBeleske(novaLista);
+  };
 
   return (
     <div className="beleske-container">
@@ -31,7 +46,25 @@ function Beleske() {
           <p>Nema beleški.</p>
         ) : (
           beleske.map((b, index) => (
-            <Card key={index} title={b.naslov} content={b.sadrzaj} />
+            <Card
+              key={index}
+              title={b.naslov}
+              content={b.sadrzaj}
+              footer={
+                <div className="beleska-actions">
+                  <Button
+                    text="Izmeni"
+                    onClick={() => izmeniBelesku(index)}
+                    type="secondary"
+                  />
+                  <Button
+                    text="Obriši"
+                    onClick={() => obrisiBelesku(index)}
+                    type="danger"
+                  />
+                </div>
+              }
+            />
           ))
         )}
       </div>
