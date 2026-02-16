@@ -1,0 +1,53 @@
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: app_db
+    environment:
+      MYSQL_DATABASE: app_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    
+  app:
+    build:
+      context: ./upravljanjevremenom
+      dockerfile: ../docker/laravel/Dockerfile
+    container_name: app_laravel
+    working_dir: /var/www
+    volumes:
+      - ./upravljanjevremenom:/var/www
+    depends_on:
+      - db 
+
+  nginx:
+    image: nginx:alpine
+    container_name: app_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./upravljanjevremenom:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+  
+  fornt:
+    image: node:20-alpine
+    container_name: app_front
+    working_dir: /app
+    volumes: 
+      - ./upravljanjevremenomfornt:/app
+    ports: 
+      - "5173:5173"
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+
+
+  
+volumes:
+  dbdata:
+
