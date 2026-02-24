@@ -1,0 +1,1040 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Time Manager API",
+        "description": "REST API sistem za upravljanje vremenom. \nOmogućava korisnicima upravljanje zadacima, beleškama i obaveštenjima, \npraćenje statusa zadataka, kao i pregled statistike rada korisnika. \nSistem podržava uloge (admin, regular i premium korisnik).",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Registracija korisnika (regular, premium ili admin)",
+                "operationId": "8a56853624e025573120a09a4c75d468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "tip"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jelena Vasiljević"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jelena@email.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "tip": {
+                                        "description": "Tip korisnika u sistemu",
+                                        "type": "string",
+                                        "enum": [
+                                            "regular",
+                                            "premium",
+                                            "admin"
+                                        ],
+                                        "example": "regular"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Uspešna registracija"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Prijava korisnika (Sanctum token)",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jelena@email.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Uspešna prijava"
+                    },
+                    "401": {
+                        "description": "Neispravni kredencijali"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Odjava korisnika (briše trenutni token)",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Uspešna odjava"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Podaci o trenutno prijavljenom korisniku",
+                "operationId": "9d9bc556f927575aa492a88c28fe5908",
+                "responses": {
+                    "200": {
+                        "description": "Podaci o korisniku"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/beleske": {
+            "get": {
+                "tags": [
+                    "Beleške"
+                ],
+                "summary": "Lista svih beleški",
+                "operationId": "e9f6d51ea308d8e5670a7af7d6c75198",
+                "responses": {
+                    "200": {
+                        "description": "Uspešno vraćena lista beleški"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Beleške"
+                ],
+                "summary": "Kreiranje nove beleške",
+                "operationId": "ce504e2b69bed92f0e795494f5c38a80",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "naslov",
+                                    "sadrzaj",
+                                    "korisnik_id"
+                                ],
+                                "properties": {
+                                    "naslov": {
+                                        "type": "string",
+                                        "example": "Plan za danas"
+                                    },
+                                    "sadrzaj": {
+                                        "type": "string",
+                                        "example": "Završiti projekat i učiti za ispit."
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Beleška uspešno kreirana"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/beleske/{id}": {
+            "get": {
+                "tags": [
+                    "Beleške"
+                ],
+                "summary": "Prikaz jedne beleške",
+                "operationId": "945f96ecd9761404ea6bb1c06b1c1bfb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Beleška pronađena"
+                    },
+                    "404": {
+                        "description": "Beleška nije pronađena"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Beleške"
+                ],
+                "summary": "Izmena beleške",
+                "operationId": "ad793ece2d19d17ba0afe83f9c22977f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "naslov": {
+                                        "type": "string",
+                                        "example": "Novi naslov"
+                                    },
+                                    "sadrzaj": {
+                                        "type": "string",
+                                        "example": "Izmenjeni sadržaj"
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Beleška uspešno izmenjena"
+                    },
+                    "404": {
+                        "description": "Beleška nije pronađena"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Beleške"
+                ],
+                "summary": "Brisanje beleške",
+                "operationId": "020fff0d283b647b41637d2f232850a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Beleška uspešno obrisana"
+                    },
+                    "404": {
+                        "description": "Beleška nije pronađena"
+                    }
+                }
+            }
+        },
+        "/api/obavestenja": {
+            "get": {
+                "tags": [
+                    "Obaveštenja"
+                ],
+                "summary": "Lista svih obaveštenja",
+                "operationId": "55e043b458ea4da569fd85bd9a4f2f28",
+                "responses": {
+                    "200": {
+                        "description": "Uspešno vraćena lista obaveštenja"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Obaveštenja"
+                ],
+                "summary": "Kreiranje novog obaveštenja",
+                "operationId": "a411c94de7fba1df4d6b180dd7713723",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "poruka",
+                                    "poslato",
+                                    "nacin_slanja",
+                                    "korisnik_id"
+                                ],
+                                "properties": {
+                                    "poruka": {
+                                        "type": "string",
+                                        "example": "Podsetnik za sastanak u 15h"
+                                    },
+                                    "poslato": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-23 14:00:00"
+                                    },
+                                    "nacin_slanja": {
+                                        "type": "string",
+                                        "example": "email"
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Obaveštenje uspešno kreirano"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/obavestenja/{id}": {
+            "get": {
+                "tags": [
+                    "Obaveštenja"
+                ],
+                "summary": "Prikaz jednog obaveštenja",
+                "operationId": "2916ad56517d91b984ab5bbd22f7e05b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obaveštenje pronađeno"
+                    },
+                    "404": {
+                        "description": "Obaveštenje nije pronađeno"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Obaveštenja"
+                ],
+                "summary": "Izmena obaveštenja",
+                "operationId": "6c6b69daf9aef6d572ba2b6c7a488af5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "poruka": {
+                                        "type": "string",
+                                        "example": "Izmenjena poruka"
+                                    },
+                                    "poslato": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-23 15:00:00"
+                                    },
+                                    "nacin_slanja": {
+                                        "type": "string",
+                                        "example": "sms"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Obaveštenje uspešno izmenjeno"
+                    },
+                    "404": {
+                        "description": "Obaveštenje nije pronađeno"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Obaveštenja"
+                ],
+                "summary": "Brisanje obaveštenja",
+                "operationId": "26265e3d69a0f23430f8033f1c27e919",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obaveštenje uspešno obrisano"
+                    },
+                    "404": {
+                        "description": "Obaveštenje nije pronađeno"
+                    }
+                }
+            }
+        },
+        "/api/podsetnici": {
+            "get": {
+                "tags": [
+                    "Podsetnici"
+                ],
+                "summary": "Lista svih podsetnika",
+                "operationId": "fb5d2c15cc2755e0ade3f3fe9194312c",
+                "responses": {
+                    "200": {
+                        "description": "Uspešno vraćena lista podsetnika"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Podsetnici"
+                ],
+                "summary": "Kreiranje novog podsetnika",
+                "operationId": "3ded20b0a0ed5bd7d45a5dd61afdd958",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "vreme",
+                                    "aktivan",
+                                    "korisnik_id"
+                                ],
+                                "properties": {
+                                    "vreme": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-23 15:00:00"
+                                    },
+                                    "aktivan": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Podsetnik uspešno kreiran"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/podsetnici/{id}": {
+            "get": {
+                "tags": [
+                    "Podsetnici"
+                ],
+                "summary": "Prikaz jednog podsetnika",
+                "operationId": "e7753a6b98ff1e821e583eaec3d5a041",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Podsetnik pronađen"
+                    },
+                    "404": {
+                        "description": "Podsetnik nije pronađen"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Podsetnici"
+                ],
+                "summary": "Izmena podsetnika",
+                "operationId": "1bdc85e44dfeef728f6a0dc3642a8f96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "vreme": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-23 18:00:00"
+                                    },
+                                    "aktivan": {
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Podsetnik uspešno izmenjen"
+                    },
+                    "404": {
+                        "description": "Podsetnik nije pronađen"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Podsetnici"
+                ],
+                "summary": "Brisanje podsetnika",
+                "operationId": "5bc195ac857ed7aa6f8b3f672cb3001b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Podsetnik uspešno obrisan"
+                    },
+                    "404": {
+                        "description": "Podsetnik nije pronađen"
+                    }
+                }
+            }
+        },
+        "/api/statistike": {
+            "get": {
+                "tags": [
+                    "Statistika"
+                ],
+                "summary": "Lista svih statistika",
+                "operationId": "29b7d83ef9fdedc6b8b3aa40da4cdc63",
+                "responses": {
+                    "200": {
+                        "description": "Uspešno vraćena lista statistika"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Statistika"
+                ],
+                "summary": "Kreiranje nove statistike",
+                "operationId": "d553cf89f7a619c9390211ddee2e3d9e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "broj_odradjenih_zadataka",
+                                    "ukupan_broj_zadataka",
+                                    "procenat_uspesnosti",
+                                    "korisnik_id"
+                                ],
+                                "properties": {
+                                    "broj_odradjenih_zadataka": {
+                                        "type": "integer",
+                                        "example": 8
+                                    },
+                                    "ukupan_broj_zadataka": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "procenat_uspesnosti": {
+                                        "type": "number",
+                                        "example": 80
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Statistika uspešno kreirana"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/statistike/{id}": {
+            "get": {
+                "tags": [
+                    "Statistika"
+                ],
+                "summary": "Prikaz jedne statistike",
+                "operationId": "02182d554f027145730902ef407b87f4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistika pronađena"
+                    },
+                    "404": {
+                        "description": "Statistika nije pronađena"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Statistika"
+                ],
+                "summary": "Izmena statistike",
+                "operationId": "14764ada0c968a695e83c5acd708730f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "broj_odradjenih_zadataka": {
+                                        "type": "integer",
+                                        "example": 9
+                                    },
+                                    "ukupan_broj_zadataka": {
+                                        "type": "integer",
+                                        "example": 12
+                                    },
+                                    "procenat_uspesnosti": {
+                                        "type": "number",
+                                        "example": 75
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Statistika uspešno izmenjena"
+                    },
+                    "404": {
+                        "description": "Statistika nije pronađena"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Statistika"
+                ],
+                "summary": "Brisanje statistike",
+                "operationId": "64d2631ed289e2b4bba47121b824e30d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistika uspešno obrisana"
+                    },
+                    "404": {
+                        "description": "Statistika nije pronađena"
+                    }
+                }
+            }
+        },
+        "/api/zadaci": {
+            "get": {
+                "tags": [
+                    "Zadaci"
+                ],
+                "summary": "Lista svih zadataka",
+                "operationId": "9d6f49b88a357c35f037d9f1d21d1b03",
+                "responses": {
+                    "200": {
+                        "description": "Uspešno vraćena lista zadataka"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Zadaci"
+                ],
+                "summary": "Kreiranje novog zadatka",
+                "operationId": "c050cc8c27718ee1a39622d74beb7f9e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "naslov",
+                                    "korisnik_id"
+                                ],
+                                "properties": {
+                                    "naslov": {
+                                        "type": "string",
+                                        "example": "Završiti projekat"
+                                    },
+                                    "opis": {
+                                        "type": "string",
+                                        "example": "Implementirati Swagger dokumentaciju"
+                                    },
+                                    "uradjeno": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "rok": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-25 23:59:00"
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Zadatak uspešno kreiran"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            }
+        },
+        "/api/zadaci/{id}": {
+            "get": {
+                "tags": [
+                    "Zadaci"
+                ],
+                "summary": "Prikaz jednog zadatka",
+                "operationId": "1d0937b62673460777ffed4821b9de12",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Zadatak pronađen"
+                    },
+                    "404": {
+                        "description": "Zadatak nije pronađen"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Zadaci"
+                ],
+                "summary": "Izmena zadatka",
+                "operationId": "ae554b9cfa49ad2d13ff06125dcd544a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "naslov": {
+                                        "type": "string",
+                                        "example": "Izmenjen naslov"
+                                    },
+                                    "opis": {
+                                        "type": "string",
+                                        "example": "Izmenjen opis"
+                                    },
+                                    "uradjeno": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "rok": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2026-02-28 18:00:00"
+                                    },
+                                    "korisnik_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Zadatak uspešno izmenjen"
+                    },
+                    "404": {
+                        "description": "Zadatak nije pronađen"
+                    },
+                    "422": {
+                        "description": "Validaciona greška"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Zadaci"
+                ],
+                "summary": "Brisanje zadatka",
+                "operationId": "0cf9b9a5586999f9ca3c2855de39aee9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Zadatak uspešno obrisan"
+                    },
+                    "404": {
+                        "description": "Zadatak nije pronađen"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Beleške",
+            "description": "Beleške"
+        },
+        {
+            "name": "Obaveštenja",
+            "description": "Obaveštenja"
+        },
+        {
+            "name": "Podsetnici",
+            "description": "Podsetnici"
+        },
+        {
+            "name": "Statistika",
+            "description": "Statistika"
+        },
+        {
+            "name": "Zadaci",
+            "description": "Zadaci"
+        }
+    ]
+}
